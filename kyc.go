@@ -74,8 +74,11 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 //		  initial arguments passed to other things for use in the called function e.g. name -> ecert
 //==============================================================================================================================
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+    logger.Debug("Inside Invoke")
 
 	if function == "create_kyc" {
+        logger.Debug("Inside Invoke: calling create kyc")
+
         return t.create_kyc(stub, args)
 	} else if function == "ping" {
         return t.ping(stub)
@@ -95,6 +98,7 @@ func (t *SimpleChaincode) ping(stub shim.ChaincodeStubInterface) ([]byte, error)
 //=================================================================================================================================
 func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k []string) ([]byte, error) {
 	var v KYCInfo
+    logger.Debug("Inside create KYC")
 
 	kyc_id         := "\"KYC_Id\":\""+k[1]+"\", "							// Variables to define the JSON
 	kyc_type       := "\"Kyc_Type\"\""+k[2]+"\","
