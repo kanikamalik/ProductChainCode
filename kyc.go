@@ -18,7 +18,7 @@ type  SimpleChaincode struct {
 
 //ASSET
 type KYCInfo struct {
-	KYC_Id         int	  `json:"kyc_id"`
+	KYC_Id         string	  `json:"kyc_id"`
 	Kyc_Type       string `json:"kyc_type"`
 	Cust_Id        string `json:"cust_id"`
 }
@@ -101,7 +101,7 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k []strin
     cust_id        := "\"Kyc_Type\"\""+k[0]+"\","
 	kyc_json := "{"+kyc_id+kyc_type+cust_id+"}" 	// Concatenates the variables to create the total JSON object
 
-	
+	logger.Debug("kyc_json: ", kyc_json)
 
 	err := json.Unmarshal([]byte(kyc_json), &v)							// Convert the JSON defined above into a vehicle object for go
 
