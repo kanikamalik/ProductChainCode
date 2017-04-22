@@ -79,7 +79,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	if function == "create_kyc" {
         logger.Debug("Inside Invoke: calling create kyc")
 		fmt.Printf("calling create_kyc!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        return t.create_kyc(stub, args)
+        return t.create_kyc(stub, args[0],args[1],args[2])
 	} else if function == "ping" {
         return t.ping(stub)
     } else { 																				
@@ -96,17 +96,15 @@ func (t *SimpleChaincode) ping(stub shim.ChaincodeStubInterface) ([]byte, error)
 //=================================================================================================================================
 //	 Create Vehicle - Creates the initial JSON for the kyc and then saves it to the ledger.
 //=================================================================================================================================
-func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k []string) ([]byte, error) {
+func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k string,k1 string ,k2 string) ([]byte, error) {
 	var v KYCInfo
     logger.Debug("Inside create KYC")
 
-	kyc_id         := "\"KYC_Id\":\""+k[1]+"\", "							// Variables to define the JSON
-	kyc_type       := "\"Kyc_Type\"\""+k[2]+"\","
-    cust_id        := "\"Kyc_Type\"\""+k[0]+"\","
+	kyc_id         := "\"KYC_Id\":\""+k+"\", "							// Variables to define the JSON
+	kyc_type       := "\"Kyc_Type\"\""+k1+"\","
+    cust_id        := "\"Kyc_Type\"\""+k2+"\","
     fmt.Printf("Inside create_kyc!!!!!!!!!!!!!!!!!!!!!!!!!!");
-	fmt.Printf(k[0]);
-	fmt.Printf(k[1]);
-	fmt.Printf(k[2]);
+	
 	kyc_json := "{"+kyc_id+kyc_type+cust_id+"}" 	// Concatenates the variables to create the total JSON object
 
 	logger.Debug("kyc_json: ", kyc_json)
