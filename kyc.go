@@ -78,7 +78,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
 	if function == "create_kyc" {
         logger.Debug("Inside Invoke: calling create kyc")
-
+		fmt.Printf("calling create_kyc!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return t.create_kyc(stub, args)
 	} else if function == "ping" {
         return t.ping(stub)
@@ -103,7 +103,7 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k []strin
 	kyc_id         := "\"KYC_Id\":\""+k[1]+"\", "							// Variables to define the JSON
 	kyc_type       := "\"Kyc_Type\"\""+k[2]+"\","
     cust_id        := "\"Kyc_Type\"\""+k[0]+"\","
-
+    fmt.Printf("Inside create_kyc!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	fmt.Printf(k[0]);
 	fmt.Printf(k[1]);
 	fmt.Printf(k[2]);
