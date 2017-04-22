@@ -104,9 +104,9 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k []strin
 	kyc_type       := "\"Kyc_Type\"\""+k[2]+"\","
     cust_id        := "\"Kyc_Type\"\""+k[0]+"\","
 
-	fmt.Printf(+k[0]);
-	fmt.Printf(+k[1]);
-	fmt.Printf(+k[2]);
+	fmt.Printf(k[0]);
+	fmt.Printf(k[1]);
+	fmt.Printf(k[2]);
 	kyc_json := "{"+kyc_id+kyc_type+cust_id+"}" 	// Concatenates the variables to create the total JSON object
 
 	logger.Debug("kyc_json: ", kyc_json)
