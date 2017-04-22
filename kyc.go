@@ -197,7 +197,7 @@ func (t *SimpleChaincode) retrieve_v5c(stub shim.ChaincodeStubInterface, kyc_id 
 	var v KYCInfo
 
 	bytes, err := stub.GetState(kyc_id);
-
+    fmt.Printf("KYC_ID------" +kyc_id);
 	if err != nil {	fmt.Printf("RETRIEVE_V5C: Failed to invoke vehicle_code: %s", err); return v, errors.New("RETRIEVE_V5C: Error retrieving vehicle with v5cID = " + kyc_id) }
 
 	err = json.Unmarshal(bytes, &v);
