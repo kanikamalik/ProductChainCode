@@ -109,7 +109,7 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k []strin
 
 	err := json.Unmarshal([]byte(kyc_json), &v)							// Convert the JSON defined above into a vehicle object for go
 
-	if err != nil { return nil, errors.New("Invalid JSON object") }
+	if err != nil { return nil, errors.New("Invalid JSON object....") }
 
 	//record, err := stub.GetState(v.KYC_Id) 								// If not an error then a record exists so cant create a new car with this V5cID as it must be unique
 
