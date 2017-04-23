@@ -19,8 +19,8 @@ type  SimpleChaincode struct {
 //ASSET
 type KYCInfo struct {
 	KYC_Id         string `json:"kyc_id"`
-	Kyc_Type       string `json:"kyc_type"`
-	Cust_Id        string `json:"cust_id"`
+	//Kyc_Type       string `json:"kyc_type"`
+	//Cust_Id        string `json:"cust_id"`
 }
 
 //==============================================================================================================================
@@ -100,10 +100,10 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k string,
 	var v KYCInfo
 
 	kyc_id         := "\"KYC_Id\"\""+k+"\", "							// Variables to define the JSON
-	kyc_type       := "\"Kyc_Type\"\""+k1+"\","
-    cust_id        := "\"Kyc_Type\"\""+k2+"\","
+	//kyc_type       := "\"Kyc_Type\"\""+k1+"\","
+    //cust_id        := "\"Kyc_Type\"\""+k2+"\","
 
-	kyc_json := "{"+kyc_id+kyc_type+cust_id+"}" 	// Concatenates the variables to create the total JSON object
+	kyc_json := "{"+kyc_id+"}" 	// Concatenates the variables to create the total JSON object
 
 	logger.Debug("kyc_json: ", kyc_json)
 
@@ -209,7 +209,7 @@ func (t *SimpleChaincode) get_kyc(stub shim.ChaincodeStubInterface, v KYCInfo, c
 
 																if err != nil { return nil, errors.New("GET_VEHICLE_DETAILS: Invalid vehicle object") }
 
-	if 		v.Cust_Id				== cust_id		{
+	if 		v.KYC_Id				== cust_id		{
 
 					return bytes, nil
 	} else {
