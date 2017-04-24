@@ -100,12 +100,14 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k []strin
 	var v KYCInfo
     logger.Debug("Inside create KYC")
 
-	kyc_id         := "KYC_Id:k, "							// Variables to define the JSON
-	//kyc_type       := "Kyc_Type :k, "
-    //cust_id        := "Cust_Id:k"
+	kyc_id         := "\"KYC_Id\":\""+k[1]+"\", "
+	kyc_type         := "\"KYC_Id\":\""+k[1]+"\", "
+	cust_id         :="\"Cust_Id\":\""+k[2]+ "\""
+
+
     fmt.Printf("Inside create_kyc!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	
-	kyc_json := "{KYC_Id : k, Kyc_Type : k ,Cust_Id :k}" 	// Concatenates the variables to create the total JSON object
+	kyc_json := "{" +kyc_id+ kyc_type+cust_id+ "}" 	// Concatenates the variables to create the total JSON object
 
 	logger.Debug("kyc_json: ", kyc_json)
 
@@ -152,7 +154,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	if function == "get_kyc_details" {
 		if len(args) != 1 { fmt.Printf("Incorrect number of arguments passed"); return nil, errors.New("QUERY: Incorrect number of arguments passed") }
 		//if err != nil { fmt.Printf("QUERY: Error retrieving cust_id: %s", err); return nil, errors.New("QUERY: Error retrieving cust_id "+err.Error()) }
-	return t.get_kyc_details(stub,"k" )
+	return t.get_kyc_details(stub,args[0] )
 	//) else if function == "get_ecert" {
 		//return t.get_ecert(stub, args[0])
 	} else if function == "ping" {
