@@ -18,9 +18,9 @@ type  SimpleChaincode struct {
 
 //ASSET
 type KYCInfo struct {
-	KYC_Id         string `json:"kyc_id"`
-	//Kyc_Type       string `json:"kyc_type"`
-	//Cust_Id        string `json:"cust_id"`
+	KYC_Id         string	  `json:"kyc_id"`
+	Kyc_Type       string `json:"kyc_type"`
+	Cust_Id        string `json:"cust_id"`
 }
 
 //==============================================================================================================================
@@ -98,20 +98,23 @@ func (t *SimpleChaincode) ping(stub shim.ChaincodeStubInterface) ([]byte, error)
 //=================================================================================================================================
 func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k string,k1 string ,k2 string) ([]byte, error) {
 	var v KYCInfo
+    logger.Debug("Inside create KYC")
 
-	kyc_id         := "\"KYC_Id\"\""+k+"\", "							// Variables to define the JSON
-	//kyc_type       := "\"Kyc_Type\"\""+k1+"\","
-    //cust_id        := "\"Kyc_Type\"\""+k2+"\","
-
-	kyc_json := "{"+kyc_id+"}" 	// Concatenates the variables to create the total JSON object
+	kyc_id         := "\"KYC_Id\":\""+"k"+"\", "							// Variables to define the JSON
+	kyc_type       := "\"Kyc_Type\"\""+"k"+"\","
+    cust_id        := "\"Kyc_Type\"\""+"k"+"\","
+    fmt.Printf("Inside create_kyc!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	
+	kyc_json := "{"+kyc_id+kyc_type+cust_id+"}" 	// Concatenates the variables to create the total JSON object
 
 	logger.Debug("kyc_json: ", kyc_json)
 
 	err := json.Unmarshal([]byte(kyc_json), &v)							// Convert the JSON defined above into a vehicle object for go
 
-	if err != nil { return nil, errors.New("Invalid JSON object.") }
+	if err != nil { return nil, errors.New("Invalid JSON object....") }
 
 	//record, err := stub.GetState(v.KYC_Id) 								// If not an error then a record exists so cant create a new car with this V5cID as it must be unique
+
 
 	bytes, err := stub.GetState("KYCs")
 																		if err != nil { return nil, errors.New("Unable to get KYCs") }
@@ -123,6 +126,8 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k string,
 
 
 	kycs.KYCs = append(kycs.KYCs, kyc_id)
+
+
 	bytes, err = json.Marshal(kycs)
 
 															if err != nil { fmt.Print("Error creating Kyc_Holder record") }
@@ -147,7 +152,7 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	if function == "get_kyc_details" {
 		if len(args) != 1 { fmt.Printf("Incorrect number of arguments passed"); return nil, errors.New("QUERY: Incorrect number of arguments passed") }
 		//if err != nil { fmt.Printf("QUERY: Error retrieving cust_id: %s", err); return nil, errors.New("QUERY: Error retrieving cust_id "+err.Error()) }
-	return t.get_kyc_details(stub,args[0] )
+	return t.get_kyc_details(stub,"k" )
 	//) else if function == "get_ecert" {
 		//return t.get_ecert(stub, args[0])
 	} else if function == "ping" {
@@ -209,7 +214,7 @@ func (t *SimpleChaincode) get_kyc(stub shim.ChaincodeStubInterface, v KYCInfo, c
 
 																if err != nil { return nil, errors.New("GET_VEHICLE_DETAILS: Invalid vehicle object") }
 
-	if 		v.KYC_Id				== cust_id		{
+	if 		v.Cust_Id				== cust_id		{
 
 					return bytes, nil
 	} else {
