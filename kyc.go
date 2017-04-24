@@ -124,7 +124,7 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k []strin
 
 	err = json.Unmarshal(bytes, &kycs)
 
-																		if err != nil {	return nil, errors.New("Corrupt KYC record") }
+																	//	if err != nil {	return nil, errors.New("Corrupt KYC record") }
 
 
 	kycs.KYCs = append(kycs.KYCs, kyc_id)
