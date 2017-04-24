@@ -18,7 +18,7 @@ type  SimpleChaincode struct {
 
 //ASSET
 type KYCInfo struct {
-	KYC_Id         string	  `json:"kyc_id"`
+	KYC_Id         string `json:"kyc_id"`
 	Kyc_Type       string `json:"kyc_type"`
 	Cust_Id        string `json:"cust_id"`
 }
@@ -102,7 +102,7 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k []strin
 
 	kyc_id         := "\"KYC_Id\":\""+"k"+"\", "							// Variables to define the JSON
 	kyc_type       := "\"Kyc_Type\"\""+"k"+"\","
-    cust_id        := "\"Kyc_Type\"\""+"k"+"\","
+    cust_id        := "\"Cust_Id\"\""+"k"+"\","
     fmt.Printf("Inside create_kyc!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	
 	kyc_json := "{"+kyc_id+kyc_type+cust_id+"}" 	// Concatenates the variables to create the total JSON object
@@ -111,7 +111,7 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k []strin
 
 	err := json.Unmarshal([]byte(kyc_json), &v)							// Convert the JSON defined above into a vehicle object for go
 
-	//if err != nil { return nil, errors.New("Invalid JSON object....") }
+	if err != nil { return nil, errors.New("Invalid JSON object....") }
 
 	//record, err := stub.GetState(v.KYC_Id) 								// If not an error then a record exists so cant create a new car with this V5cID as it must be unique
 
