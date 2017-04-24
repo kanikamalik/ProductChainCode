@@ -79,7 +79,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	if function == "create_kyc" {
         logger.Debug("Inside Invoke: calling create kyc")
 		fmt.Printf("calling create_kyc!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        return t.create_kyc(stub, args[0],args[1],args[2])
+        return t.create_kyc(stub, args)
 	} else if function == "ping" {
         return t.ping(stub)
     } else { 																				
@@ -96,7 +96,7 @@ func (t *SimpleChaincode) ping(stub shim.ChaincodeStubInterface) ([]byte, error)
 //=================================================================================================================================
 //	 Create Vehicle - Creates the initial JSON for the kyc and then saves it to the ledger.
 //=================================================================================================================================
-func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k string,k1 string ,k2 string) ([]byte, error) {
+func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k []string) ([]byte, error) {
 	var v KYCInfo
     logger.Debug("Inside create KYC")
 
@@ -111,7 +111,7 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k string,
 
 	err := json.Unmarshal([]byte(kyc_json), &v)							// Convert the JSON defined above into a vehicle object for go
 
-	if err != nil { return nil, errors.New("Invalid JSON object....") }
+	//if err != nil { return nil, errors.New("Invalid JSON object....") }
 
 	//record, err := stub.GetState(v.KYC_Id) 								// If not an error then a record exists so cant create a new car with this V5cID as it must be unique
 
