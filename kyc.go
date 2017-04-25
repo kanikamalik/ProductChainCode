@@ -178,8 +178,8 @@ func (t *SimpleChaincode) get_kyc_details(stub shim.ChaincodeStubInterface, cust
 
 	for _, id := range kycs.KYCs {
 		
-		v, err = t.retrieve_v5c(stub, id)
-		
+		bytes, err = t.retrieve_v5c(stub, id)
+		err = json.Unmarshal(bytes, &v);
 		if err != nil {return nil, errors.New("Failed to retrieve kyc" +v.KYC_Id +v.Cust_Id)}
 temp, err = t.get_kyc(stub, v,cust_id)
 
@@ -196,19 +196,19 @@ temp, err = t.get_kyc(stub, v,cust_id)
 
 }
 
-func (t *SimpleChaincode) retrieve_v5c(stub shim.ChaincodeStubInterface, kyc_id string) (KYCInfo, error) {
+func (t *SimpleChaincode) retrieve_v5c(stub shim.ChaincodeStubInterface, kyc_id string) ([]byte, error) {
 
 	var v KYCInfo
 
 	bytes, err := stub.GetState(kyc_id);
     fmt.Printf("KYC_ID------" +kyc_id);
-	if err != nil {	fmt.Printf("RETRIEVE_V5C: Failed to invoke vehicle_code: %s", err); return v, errors.New("RETRIEVE_V5C: Error retrieving vehicle with v5cID = " + kyc_id) }
+	if err != nil {	fmt.Printf("RETRIEVE_V5C: Failed to invoke vehicle_code: %s", err); return bytes, errors.New("RETRIEVE_V5C: Error retrieving vehicle with v5cID = " + kyc_id) }
 
 	err = json.Unmarshal(bytes, &v);
 
-    if err != nil {	fmt.Printf("RETRIEVE_V5C: Corrupt vehicle record "+string(bytes)+": %s", err); return v, errors.New("RETRIEVE_V5C: Corrupt vehicle record"+string(bytes))	}
+    if err != nil {	fmt.Printf("RETRIEVE_V5C: Corrupt vehicle record "+string(bytes)+": %s", err); return bytes, errors.New("RETRIEVE_V5C: Corrupt vehicle record"+string(bytes))	}
 
-	return v, nil
+	return bytes, nil
 }
 func (t *SimpleChaincode) get_kyc(stub shim.ChaincodeStubInterface, v KYCInfo, cust_id string) ([]byte, error) {
 
