@@ -180,7 +180,7 @@ func (t *SimpleChaincode) get_kyc_details(stub shim.ChaincodeStubInterface, cust
 		
 		v, err = t.retrieve_v5c(stub, id)
 
-		if err != nil {return nil, errors.New("Failed to retrieve kyc" +kyc_id)}
+		if err != nil {return nil, errors.New("Failed to retrieve kyc" +id)}
 temp, err = t.get_kyc(stub, v,cust_id)
 
 		if err == nil {
