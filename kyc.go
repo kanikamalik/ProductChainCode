@@ -96,7 +96,7 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k string)
 	var v KYCInfo
     logger.Debug("Inside create KYC")
 
-	kyc_id         := "\"KYC_Id\":\""+k+"\", "
+	kyc_id         := "\"KYC_Id\":\""+k+"\""
 	//kyc_type         := "\"KYC_Id\":\""+k[2]+"\", "
 	//cust_id         :="\"Cust_Id\":\""+k[0]+ "\""
 
