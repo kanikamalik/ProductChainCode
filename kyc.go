@@ -192,7 +192,7 @@ func (t *SimpleChaincode) get_kyc_details(stub shim.ChaincodeStubInterface, cust
 
 
 
-		v, err = t.retrieve_v5c(stub, id)
+		//v, err = t.retrieve_v5c(stub, id)
 //-------------
 		//var v KYCInfo
 
