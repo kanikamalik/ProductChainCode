@@ -6,6 +6,7 @@ import (
 	"fmt"
     "encoding/json"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
+	"strings"
 )
 var logger = shim.NewLogger("CLDChaincode")
 //==============================================================================================================================
@@ -19,8 +20,8 @@ type  SimpleChaincode struct {
 //ASSET
 type KYCInfo struct {
 	KYC_Id         string `json:"kyc_id"`
-	Kyc_Type       string `json:"kyc_type"`
-	Cust_Id        string `json:"cust_id"`
+//	Kyc_Type       string `json:"kyc_type"`
+//	Cust_Id        string `json:"cust_id"`
 }
 
 //==============================================================================================================================
@@ -74,7 +75,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	if function == "create_kyc" {
         logger.Debug("Inside Invoke: calling create kyc")
 		fmt.Printf("calling create_kyc!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        return t.create_kyc(stub, args)
+        return t.create_kyc(stub, args[0])
 	} else if function == "ping" {
         return t.ping(stub)
     } else { 																				
@@ -91,18 +92,18 @@ func (t *SimpleChaincode) ping(stub shim.ChaincodeStubInterface) ([]byte, error)
 //=================================================================================================================================
 //	 Create Vehicle - Creates the initial JSON for the kyc and then saves it to the ledger.
 //=================================================================================================================================
-func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k []string) ([]byte, error) {
+func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k string) ([]byte, error) {
 	var v KYCInfo
     logger.Debug("Inside create KYC")
 
-	kyc_id         := "\"KYC_Id\":\""+k[1]+"\", "
-	kyc_type         := "\"KYC_Id\":\""+k[2]+"\", "
-	cust_id         :="\"Cust_Id\":\""+k[0]+ "\""
+	kyc_id         := "\"KYC_Id\":\""+k+"\", "
+	//kyc_type         := "\"KYC_Id\":\""+k[2]+"\", "
+	//cust_id         :="\"Cust_Id\":\""+k[0]+ "\""
 
 
     fmt.Printf("Inside create_kyc!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	
-	kyc_json := "{" +kyc_id+ kyc_type+cust_id+ "}" 	// Concatenates the variables to create the total JSON object
+	kyc_json := "{" +kyc_id+ "}" 	// Concatenates the variables to create the total JSON object
 
 	logger.Debug("kyc_json: ", kyc_json)
 
@@ -220,7 +221,7 @@ func (t *SimpleChaincode) get_kyc(stub shim.ChaincodeStubInterface, v KYCInfo, c
 
 																if err != nil { return nil, errors.New("GET_VEHICLE_DETAILS: Invalid vehicle object") }
 return bytes, nil
-	if 		v.Cust_Id				== cust_id		{
+	if 		strings.Contains(v.KYC_Id,cust_id)		{
 
 					return bytes, nil
 	} else {
