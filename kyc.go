@@ -196,7 +196,7 @@ result := "["
  	} else {
  		result = result[:len(result)-1] + "]"
  	}
-	return []byte(result), nil
+	return bytes, nil
 
 }
 
