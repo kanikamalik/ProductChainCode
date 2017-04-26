@@ -192,16 +192,10 @@ func (t *SimpleChaincode) get_kyc_details(stub shim.ChaincodeStubInterface, cust
 
 	for _, id := range kycs.KYCs {
 
-
-
-		//v, err = t.retrieve_v5c(stub, id)
-//-------------
-		//var v KYCInfo
 id = "{" +id +"}"
 err:=json.Unmarshal([]byte(id),&v)
-//err = json.Unmarshal([]byte(vehicle_json), &v)							// Convert the JSON defined above into a vehicle object for go
 
-	bytes, err := stub.GetState(id);
+	bytes, err := stub.GetState(v.KYC_Id);
     fmt.Printf("%sKYC_ID------" +id);
 	if err != nil {	fmt.Printf("RETRIEVE_V5C: Failed to invoke vehicle_code: %s", err); return bytes, errors.New("RETRIEVE_V5C: Error retrieving vehicle with v5cID = " + id) }
 //return bytes,nil
