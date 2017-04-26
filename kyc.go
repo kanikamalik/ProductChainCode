@@ -219,7 +219,7 @@ func (t *SimpleChaincode) get_kyc(stub shim.ChaincodeStubInterface, v KYCInfo, c
 	bytes, err := json.Marshal(v)
 
 																if err != nil { return nil, errors.New("GET_VEHICLE_DETAILS: Invalid vehicle object") }
-
+return bytes, nil
 	if 		v.Cust_Id				== cust_id		{
 
 					return bytes, nil
