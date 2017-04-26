@@ -196,7 +196,7 @@ func (t *SimpleChaincode) get_kyc_details(stub shim.ChaincodeStubInterface, cust
 //-------------
 		//var v KYCInfo
 
-	bytes, err := stub.GetState("kan123pass");
+	bytes, err := stub.GetState("we123adhar");
     fmt.Printf("KYC_ID------" +id);
 	if err != nil {	fmt.Printf("RETRIEVE_V5C: Failed to invoke vehicle_code: %s", err); return bytes, errors.New("RETRIEVE_V5C: Error retrieving vehicle with v5cID = " + id) }
 return bytes,nil
