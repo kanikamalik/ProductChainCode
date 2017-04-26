@@ -215,7 +215,7 @@ err:=json.Unmarshal([]byte(id),&v)
 
 		if err != nil {return nil, errors.New("Failed to retrieve V5C"+id)}
 
-		temp, err = t.get_kyc(stub, v,v.KYC_Id)
+		temp, err = t.get_kyc(stub, v,cust_id)
 
 		if err == nil {
 			result += string(temp) + ","
