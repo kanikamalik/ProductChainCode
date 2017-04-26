@@ -101,8 +101,8 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k []strin
     logger.Debug("Inside create KYC")
 
 	kyc_id         := "\"KYC_Id\":\""+k[1]+"\", "
-	kyc_type         := "\"KYC_Id\":\""+k[1]+"\", "
-	cust_id         :="\"Cust_Id\":\""+k[2]+ "\""
+	kyc_type         := "\"KYC_Id\":\""+k[2]+"\", "
+	cust_id         :="\"Cust_Id\":\""+k[0]+ "\""
 
 
     fmt.Printf("Inside create_kyc!!!!!!!!!!!!!!!!!!!!!!!!!!");
