@@ -27,11 +27,6 @@ type KYCInfo struct {
 //	User_and_eCert - Struct for storing the JSON of a user and their ecert
 //==============================================================================================================================
 
-type User_and_eCert struct {
-	Identity string `json:"identity"`
-	eCert string `json:"ecert"`
-}
-
 type Kyc_Holder struct {
 	KYCs 	[]string `json:"kycs"`
 }
@@ -171,17 +166,17 @@ func (t *SimpleChaincode) get_kyc_details(stub shim.ChaincodeStubInterface, cust
 																			if err != nil { return nil, errors.New("Unable to get kycs") }
 	var kycs Kyc_Holder
 	err = json.Unmarshal(bytes, &kycs)
-	//var v KYCInfo		
+	var v KYCInfo		
 																	if err != nil {	return nil, errors.New("Corrupt V5C_Holder") }
-// 	result := "["
-// 	var temp []byte
+result := "["
+ 	var temp []byte
 // 	//var v KYCInfo
 
-// 	for _, id := range kycs.KYCs {
-// 		bytes1, err1 := stub.GetState(id);
+	for _, id := range kycs.KYCs {
+ 		bytes, err := stub.GetState(id);
 // 		if err1 != nil {	fmt.Printf("RETRIEVE_V5C: Failed to invoke vehicle_code: %s", err1); return bytes1, errors.New("RETRIEVE_V5C: Error retrieving vehicle with v5cID = " + id) }
 
-// 	err = json.Unmarshal(bytes1, &v);
+ 	err = json.Unmarshal(bytes, &v);
 
 //     if err != nil {	fmt.Printf("RETRIEVE_V5C: Corrupt vehicle record !!!!!!!!"+id+string(bytes1)+": %s", err); return bytes1, errors.New("RETRIEVE_V5C: Corrupt vehicle record----"+id+string(bytes1))	}
 
@@ -190,18 +185,18 @@ func (t *SimpleChaincode) get_kyc_details(stub shim.ChaincodeStubInterface, cust
 // 		//v, err = t.retrieve_v5c(stub, id)
 // 		//err = json.Unmarshal(bytes, &v);
 // 		//if err != nil {return nil, errors.New("Failed to retrieve kyc" +v.KYC_Id +v.Cust_Id)}
-// temp, err = t.get_kyc(stub, v,cust_id)
+ temp, err = t.get_kyc(stub, v,cust_id)
 
-// 		if err == nil {
-// 			result += string(temp) + ","
-// 		}
-// 	}
-// 	if len(result) == 1 {
-// 		result = "[]"
-// 	} else {
-// 		result = result[:len(result)-1] + "]"
-// 	}
-	return bytes, nil
+ 		if err == nil {
+ 			result += string(temp) + ","
+ 		}
+	}
+ 	if len(result) == 1 {
+ 		result = "[]"
+ 	} else {
+ 		result = result[:len(result)-1] + "]"
+ 	}
+	return []byte(result), nil
 
 }
 
