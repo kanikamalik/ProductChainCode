@@ -105,16 +105,21 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k string)
 	
 	kyc_json := "{" +kyc_id+ "}" 	// Concatenates the variables to create the total JSON object
 
-	logger.Debug("kyc_json: ", kyc_json)
+	//logger.Debug("kyc_json: ", kyc_json)
 
+	
 	err := json.Unmarshal([]byte(kyc_json), &v)							// Convert the JSON defined above into a vehicle object for go
 
-	if err != nil { return nil, errors.New("Invalid JSON object...." +k) }
+																		if err != nil { return nil, errors.New("Invalid JSON object") }
 
-	//record, err := stub.GetState(v.KYC_Id) 								// If not an error then a record exists so cant create a new car with this V5cID as it must be unique
+	record, err := stub.GetState(v.KYC_Id) 								// If not an error then a record exists so cant create a new car with this V5cID as it must be unique
 
+	if record != nil { return nil, errors.New("Vehicle already exists") }
+	_, err  = t.save_changes(stub, v)
 
-	bytes, err := stub.GetState("KYCs")
+																		if err != nil { fmt.Printf("CREATE_VEHICLE: Error saving changes: %s", err); return nil, errors.New("Error saving changes") }
+
+	bytes, err := stub.GetState("kycs")
 																		if err != nil { return nil, errors.New("Unable to get KYCs") }
 	var kycs Kyc_Holder
 
@@ -138,7 +143,18 @@ func (t *SimpleChaincode) create_kyc(stub shim.ChaincodeStubInterface, k string)
 
 }
 
+func (t *SimpleChaincode) save_changes(stub shim.ChaincodeStubInterface, v KYCInfo) (bool, error) {
 
+	bytes, err := json.Marshal(v)
+
+	if err != nil { fmt.Printf("SAVE_CHANGES: Error converting vehicle record: %s", err); return false, errors.New("Error converting vehicle record") }
+
+	err = stub.PutState(v.KYC_Id, bytes)
+
+	if err != nil { fmt.Printf("SAVE_CHANGES: Error storing vehicle record: %s", err); return false, errors.New("Error storing vehicle record") }
+
+	return true, nil
+}
 
 func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 
