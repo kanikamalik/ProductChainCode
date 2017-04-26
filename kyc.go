@@ -199,10 +199,10 @@ func (t *SimpleChaincode) get_kyc_details(stub shim.ChaincodeStubInterface, cust
 	bytes, err := stub.GetState(id);
     fmt.Printf("KYC_ID------" +id);
 	if err != nil {	fmt.Printf("RETRIEVE_V5C: Failed to invoke vehicle_code: %s", err); return bytes, errors.New("RETRIEVE_V5C: Error retrieving vehicle with v5cID = " + id) }
-return bytes,nil
+//return bytes,nil
 	err = json.Unmarshal(bytes, &v);
 
-    if err != nil {	fmt.Printf("RETRIEVE_V5C: Corrupt vehicle record "+string(bytes)+": %s", err); return bytes, errors.New("RETRIEVE_V5C: Corrupt vehicle record"+string(bytes))	}
+    if err != nil {	fmt.Printf("RETRIEVE_V5C: Corrupt vehicle record "+string(bytes)+": %s", err); return bytes, errors.New("RETRIEVE_V5C: Corrupt vehicle record------"+id+string(bytes))	}
 
 	//return v, nil
 //==========
